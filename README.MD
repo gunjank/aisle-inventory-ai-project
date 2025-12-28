@@ -1,4 +1,4 @@
-# 🍎 AI Inventory Auditor (Universal Vision System)
+# AI Inventory Auditor (Universal Vision System)
 
 A high-performance, local vision system for real-time inventory SKU auditing. This system utilizes **Ollama** with **Llava:13b** to transform shelf images into structured, categorized JSON data with a focus on counting accuracy.
 
@@ -6,11 +6,12 @@ A high-performance, local vision system for real-time inventory SKU auditing. Th
 
 ## 📁 Project Structure
 
+```text
 .
 ├── backend/
 │   ├── server.js          # Express API & Ollama pipeline
 │   ├── inventory.sqlite   # SQLite Database (Auto-generated, Git-ignored)
-│   └── uploads/           # Temp storage for image processing
+├── uploads/               # Temp storage for image processing (Root)
 ├── public/
 │   ├── index.html         # Audit Dashboard
 │   ├── script.js          # Frontend Logic
