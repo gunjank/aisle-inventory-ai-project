@@ -1,0 +1,28 @@
+# Node dependencies
+node_modules/
+
+# Database (Keeps your audit data private)
+*.sqlite
+*.sqlite-journal
+
+# Environment Variables
+.env
+.ngrok.md
+
+# Logs
+app.log
+*.log
+npm-debug.log*
+
+# Uploads (Root folder) - Ignore images, keep folder
+uploads/*
+!uploads/.gitkeep
+
+# images - Ignore images, keep folder
+public/images/*
+!public/images/.gitkeep
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+

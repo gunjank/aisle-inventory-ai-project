@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Metrics Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f9; }
+        h2 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: white; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #007bff; color: white; cursor: pointer; }
+        tr:nth-child(even) { background-color: #f8f8f8; }
+        .error { color: #dc3545; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>API Request Metrics (Last 50 Scans)</h2>
+    <table id="metrics-table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Session</th>
+                <th>Status</th>
+                <th>Duration (s)</th>
+                <th>Ollama (s)</th>
+                <th>Tokens</th>
+                <th>Items</th>
+                <th>Error Details</th>
+            </tr>
+        </thead>
+        <tbody id="metrics-body">
+            <tr><td colspan="8">Loading metrics...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', fetchMetrics);
+        
+        async function fetchMetrics() {
+            const tbody = document.getElementById('metrics-body');
+            tbody.innerHTML = '<tr><td colspan="8">Fetching data from server...</td></tr>';
+            
+            // NOTE: Replace with your actual dynamic base URL logic if needed,
+            // but for simplicity here, we assume the page is served from the same host.
+            const API_BASE_URL = window.location.protocol + '//' + window.location.host;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/metrics`);
+                const metrics = await response.json();
+
+                if (!metrics || metrics.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="8">No metric records found yet. Run an image scan to generate data.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = metrics.map(m => `
+                    <tr class="${m.status_code !== 200 ? 'error' : ''}">
+                        <td>${new Date(m.timestamp).toLocaleTimeString()}</td>
+                        <td>${m.store_session}</td>
+                        <td style="color:${m.status_code === 200 ? 'green' : 'red'};">${m.status_code}</td>
+                        <td>${(m.request_duration_ms / 1000).toFixed(2)}</td>
+                        <td>${m.ollama_duration_s.toFixed(2)}</td>
+                        <td>${m.completion_tokens}</td>
+                        <td>${m.processed_items}</td>
+                        <td class="${m.error_details ? 'error' : ''}">${m.error_details || 'N/A'}</td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                tbody.innerHTML = `<tr><td colspan="8" class="error">Error loading metrics: ${error.message}</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>

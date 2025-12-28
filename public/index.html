@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aisle Inventory Scanner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🛒 Aisle Inventory Scanner</h1>
+        <p>Upload one or more cropped shelf images to scan and update stock inventory.</p>
+
+        <div class="control-group">
+            <div id="session-display">
+                Current Store Session: <input type="text" id="storeSession" value="StoreA_Run1" placeholder="Enter Store Session ID" required>
+            </div>
+            <label for="actualFileInput" class="custom-file-button">Choose Images</label>
+            <input type="file" id="actualFileInput" accept="image/*" multiple style="display: none;">
+            <button>Scan Aisle(s)</button>
+        </div>
+        
+        <div id="status-message">Ready to scan.</div>
+
+        <table id="inventory-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Threshold</th>
+                    <th>Alert</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-body">
+                <tr><td colspan="5">Loading data...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <button id="dd-button">DD</button>
+            <div id="metrics-display" class="metrics-container" style="margin-top: 15px; padding: 10px; border: 1px dashed #ccc; background-color: #f9f9f9; display: none;">
+            ### ⚡ Performance Metrics
+            <p><strong>Total Time:</strong> <span id="total-time"></span></p>
+            <p><strong>Input Tokens (Prompt):</strong> <span id="prompt-tokens"></span></p>
+            <p><strong>Output Tokens (Response):</strong> <span id="completion-tokens"></span></p>
+            <p><strong>Speed:</strong> <span id="tokens-per-second"></span></p>
+        </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
