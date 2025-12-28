@@ -21,6 +21,7 @@ A high-performance, local vision system for real-time inventory SKU auditing. Th
 ├── package.json           # Node dependencies
 └── README.md              # Documentation
 
+```
 ---
 
 ## 🚀 Installation & Setup
